@@ -1,5 +1,5 @@
 import { subBytes, shiftRows, mixColumns, expandKey } from './core/aes.js';
-import { ipToBytes, bytesToIp } from './utils.js';
+import { ipToBytes, bytesToIp, randomBytes } from './utils.js';
 
 /**
  * Encrypt a single block using AES-XTS mode (XEX Tweakable Block Cipher with Ciphertext Stealing).
@@ -216,8 +216,7 @@ export function encrypt(ip, key, tweak = null) {
 
     // Generate random tweak if not provided
     if (!tweak) {
-        tweak = new Uint8Array(16);
-        crypto.getRandomValues(tweak);
+        tweak = randomBytes(16);
     } else if (!(tweak instanceof Uint8Array) || tweak.length !== 16) {
         throw new Error('Tweak must be a 16-byte Uint8Array');
     }

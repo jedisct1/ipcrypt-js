@@ -1,4 +1,4 @@
-import { ipToBytes, bytesToIp } from './utils.js';
+import { ipToBytes, bytesToIp, randomBytes } from './utils.js';
 import { encrypt as encryptBlock, decrypt as decryptBlock } from './core/kiasu-bc.js';
 
 /**
@@ -23,8 +23,7 @@ export function encrypt(ip, key, tweak) {
 
     // Generate random tweak if not provided
     if (!tweak) {
-        tweak = new Uint8Array(8);
-        crypto.getRandomValues(tweak);
+        tweak = randomBytes(8);
     } else if (!(tweak instanceof Uint8Array) || tweak.length !== 8) {
         throw new Error('Tweak must be an 8-byte Uint8Array');
     }

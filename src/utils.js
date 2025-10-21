@@ -140,14 +140,24 @@ export function bytesToIp(bytes) {
 }
 
 /**
- * Generate cryptographically secure random bytes using Web Crypto API.
- * 
+ * Generate cryptographically secure random bytes.
+ * Uses Web Crypto API (Node 15+) with fallback to crypto.randomFillSync (Node 14+).
+ *
  * @param {number} length - Number of bytes to generate
  * @returns {Uint8Array} Random bytes
  */
 export function randomBytes(length) {
     const bytes = new Uint8Array(length);
-    crypto.getRandomValues(bytes);
+
+    // Feature detection: Use getRandomValues if available (Node 15+),
+    // otherwise fall back to randomFillSync (Node 14+)
+    if (crypto.getRandomValues) {
+        crypto.getRandomValues(bytes);
+    } else {
+        // Node 14 compatibility: use randomFillSync instead
+        crypto.randomFillSync(bytes);
+    }
+
     return bytes;
 }
 

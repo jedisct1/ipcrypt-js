@@ -3,16 +3,74 @@
     "version": "1.0.3",
     "description": "IP address encryption and obfuscation",
     "type": "module",
-    "main": "index.js",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "exports": {
-        ".": "./index.js",
-        "./deterministic": "./src/ipcrypt-deterministic.js",
-        "./nd": "./src/ipcrypt-nd.js",
-        "./ndx": "./src/ipcrypt-ndx.js",
-        "./pfx": "./src/ipcrypt-pfx.js",
-        "./utils": "./src/utils.js"
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            },
+            "require": {
+                "types": "./dist/index.d.cts",
+                "default": "./dist/index.cjs"
+            }
+        },
+        "./deterministic": {
+            "import": {
+                "types": "./dist/ipcrypt-deterministic.d.ts",
+                "default": "./dist/ipcrypt-deterministic.js"
+            },
+            "require": {
+                "types": "./dist/ipcrypt-deterministic.d.cts",
+                "default": "./dist/ipcrypt-deterministic.cjs"
+            }
+        },
+        "./nd": {
+            "import": {
+                "types": "./dist/ipcrypt-nd.d.ts",
+                "default": "./dist/ipcrypt-nd.js"
+            },
+            "require": {
+                "types": "./dist/ipcrypt-nd.d.cts",
+                "default": "./dist/ipcrypt-nd.cjs"
+            }
+        },
+        "./ndx": {
+            "import": {
+                "types": "./dist/ipcrypt-ndx.d.ts",
+                "default": "./dist/ipcrypt-ndx.js"
+            },
+            "require": {
+                "types": "./dist/ipcrypt-ndx.d.cts",
+                "default": "./dist/ipcrypt-ndx.cjs"
+            }
+        },
+        "./pfx": {
+            "import": {
+                "types": "./dist/ipcrypt-pfx.d.ts",
+                "default": "./dist/ipcrypt-pfx.js"
+            },
+            "require": {
+                "types": "./dist/ipcrypt-pfx.d.cts",
+                "default": "./dist/ipcrypt-pfx.cjs"
+            }
+        },
+        "./utils": {
+            "import": {
+                "types": "./dist/utils.d.ts",
+                "default": "./dist/utils.js"
+            },
+            "require": {
+                "types": "./dist/utils.d.cts",
+                "default": "./dist/utils.cjs"
+            }
+        }
     },
     "scripts": {
+        "build": "tsup",
+        "prepublishOnly": "npm run build",
         "test": "bun test/test.js",
         "test:ip": "bun test/test-ip.js",
         "test:pfx": "bun test/test-pfx.js",
@@ -27,12 +85,13 @@
         "security",
         "ipv4",
         "ipv6",
-        "obfuscation"
+        "obfuscation",
+        "typescript"
     ],
     "author": "Frank Denis",
     "license": "ISC",
     "engines": {
-        "node": ">=16.0.0",
+        "node": ">=14.0.0",
         "bun": ">=1.0.0"
     },
     "repository": {
@@ -43,12 +102,15 @@
         "url": "https://github.com/jedisct1/ipcrypt-js/issues"
     },
     "files": [
-        "src",
-        "index.js",
+        "dist",
         "README.md",
         "LICENSE"
     ],
+    "sideEffects": false,
     "devDependencies": {
-        "eslint": "^8.57.1"
+        "@types/node": "^24.9.1",
+        "eslint": "^8.57.1",
+        "tsup": "^8.5.0",
+        "typescript": "^5.9.3"
     }
 }
